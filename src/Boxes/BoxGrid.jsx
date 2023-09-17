@@ -35,13 +35,13 @@ function BoxGrid(props) {
             props.currentList.map((words, indexY) => {
                 return (
                     <ul className='box_form_ul'>
-                        {words.split('').map((letterElement, indexX) => (<Box letter={letterElement} color={checkCorrectness(indexX, letterElement)} key={indexY +''+indexX+''+1} id={indexY +''+indexX+''+1}/>))}
+                        {words.split('').map((letterElement, indexX) => (<Box letter={letterElement} color={checkCorrectness(indexX, letterElement)} key={indexY +''+indexX+''+1} id={indexY +''+indexX+''+1} set={true}/>))}
                     </ul>
                 );
             })
         }
-        <ul className='box_form_ul'>
-            {wordArray.map((letterElement, index) => (<Box letter={letterElement} key={index +''+2} id={index+''+2} />))}
+        <ul className={`box_form_ul ${props.shake ? 'shake-row' : '' }`}>
+            {wordArray.map((letterElement, index) => (<Box letter={letterElement} key={index +''+2} id={index+''+2} flip={props.flip} color={checkCorrectness(index, letterElement)}/>))}
         </ul>
         {padList.length > 0 &&
             padList.map((words, indexY) => {

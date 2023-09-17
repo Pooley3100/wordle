@@ -6,6 +6,16 @@
     height: 60px;
 }
 
+.li-flip{
+    animation-name: vertical-flip;
+    animation-duration: 0.5s;
+}
+
+@keyframes vertical-flip {
+    0% { transform: rotateX(0deg) }
+    100% { transform: rotateX(360deg) }
+}
+
 .letter{
     font-size: 40px;
     margin: 0px;

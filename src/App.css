@@ -8,7 +8,7 @@
 
 .alert-box-transition{
   opacity: 0;
-  animation: fade-in 1s ease-in forwards, fade-out 4s 1s ease-out forwards;
+  animation: fade-in 0.3s ease-in forwards, fade-out 3s 1s ease-out forwards;
 }
 
 @keyframes fade-in {

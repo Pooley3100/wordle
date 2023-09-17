@@ -5,6 +5,7 @@ import { select, isWord } from './Control/GetWord';
 
 function App() {
   const [correctWord, setCorrectWord] = useState(select());
+  const [flip, setFlip] = useState(false);
   const [notWord, setNotWord] = useState(false)
   const [currentIn, setCurrentIn] = useState('');
   const [currentList, setCurrentList] = useState([]);
@@ -26,8 +27,12 @@ function App() {
     var wordResult = isWord(currentIn)
     if (currentIn.length === 5 && wordResult) {
       const newList = [...currentList, currentIn];
-      setCurrentList(newList);
-      setCurrentIn('');
+      // Set Timeout here to add a delay such that box flip reveal can be animated
+      setTimeout(() => {
+        setCurrentList(newList);
+        setCurrentIn('');
+      }, 2500);
+      setFlip(true);
     } else if (currentIn.length === 5 && !wordResult) {
       setNotWord(true);
     }
@@ -36,6 +41,7 @@ function App() {
   //Appends typed in letters to current in
   function changeCurrentIn(letter, mod) {
     setNotWord(false);
+    setFlip(false);
     if (currentIn.length < 5 && mod === true) {
       setCurrentIn(currentIn + letter);
     } else if (mod === false && currentIn.length > 0) {
@@ -47,7 +53,7 @@ function App() {
   return (
     <div className='page' onKeyDown={handleLetterInput} tabIndex={'0'}>
       <h2 className='navBox'> Wordle Rip-Off</h2>
-      <BoxGrid currentInput={currentIn} currentList={currentList} correctWord={correctWord}>
+      <BoxGrid currentInput={currentIn} currentList={currentList} correctWord={correctWord} shake={notWord} flip={flip}>
         <p className={`alert-box ${notWord ? 'alert-box-transition' : ''}`}>Not in Dictionary</p>
       </BoxGrid>
     </div>
