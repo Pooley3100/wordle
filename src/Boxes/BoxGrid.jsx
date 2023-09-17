@@ -24,6 +24,10 @@ function BoxGrid(props) {
         }
     }
 
+    //TODO #1 crashes on sixth entry
+    //TODO #2 bug on key id for render
+    //TODO #6 shake box row on incorrect entry
+    //TODO #5 animation as row is revealed
     //Contains three tenary controls, first is list of entered words, second is current input, third is empty lines
     return (<div className='box_form'>
         {props.children}
