@@ -1,0 +1,18 @@
+.inner_box{
+    box-sizing: content-box;
+    border: 2px solid rgb(159, 172, 149);
+    border-radius: 5px;
+    width: 100%;
+    height: 60px;
+}
+
+.letter{
+    font-size: 40px;
+    margin: 0px;
+    text-align: center;
+}
+
+.letter_li{
+    width: 60px;
+    padding: 3px;
+}

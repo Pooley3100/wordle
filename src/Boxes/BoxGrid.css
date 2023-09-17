@@ -1,0 +1,21 @@
+.box_form{
+    width: 50%;
+    margin: auto;
+}
+
+.box_form_ul{
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin: auto;
+    width: 250px;
+    padding-top: 0px;
+    padding-right: 40px;
+    padding-bottom: 0px;
+    list-style-type: none;
+    justify-content: center;
+    display: grid;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
