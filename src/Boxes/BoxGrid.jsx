@@ -9,9 +9,12 @@ function BoxGrid(props) {
     var wordArray = currentInputEdit.split('');
 
     // Pad out the lower entries with empty lines if needed
-    var listRemainder = 5 - props.currentList.length;
-    var padWord = ' '.repeat(5);
-    var padList = Array(listRemainder).fill(padWord);
+    var padList = Array(0);
+    if(props.currentList.length < 5){
+        var listRemainder = 5 - props.currentList.length;
+        var padWord = ' '.repeat(5);
+        padList = Array(listRemainder).fill(padWord);
+    }
 
     // Called to compare current in to correct word and append to css styles.
     function checkCorrectness(index, currentLetter){
@@ -26,8 +29,6 @@ function BoxGrid(props) {
 
     //TODO #1 crashes on sixth entry
     //TODO #2 bug on key id for render
-    //TODO #6 shake box row on incorrect entry
-    //TODO #5 animation as row is revealed
     //Contains three tenary controls, first is list of entered words, second is current input, third is empty lines
     return (<div className='box_form'>
         {props.children}
@@ -40,9 +41,10 @@ function BoxGrid(props) {
                 );
             })
         }
+        {(props.currentList.length <= 5) &&
         <ul className={`box_form_ul ${props.shake ? 'shake-row' : '' }`}>
             {wordArray.map((letterElement, index) => (<Box letter={letterElement} key={index +''+2} id={index+''+2} flip={props.flip} color={checkCorrectness(index, letterElement)}/>))}
-        </ul>
+        </ul> }
         {padList.length > 0 &&
             padList.map((words, indexY) => {
                 return (

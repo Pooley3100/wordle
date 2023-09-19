@@ -6,6 +6,7 @@ function Box(props) {
     if(props.flip || props.set){
         changeColor = true;
     }
+    // TODO: #7 slight sync issue with reveal animation
     return(
         <li className={`letter_li ${props.flip ? 'li-flip' : ''}`}>
             <div className='inner_box' style={{backgroundColor : changeColor ? props.color : ''}}>

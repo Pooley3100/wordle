@@ -46,6 +46,8 @@
   height: 100vh;
   outline: none;
   overflow: hidden;
+  position: relative;
+  z-index:0;
 }
 
 .App-logo {

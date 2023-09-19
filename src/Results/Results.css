@@ -1,0 +1,23 @@
+.results-page{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 10%;
+    border: 2px black;
+    text-align: center;
+    background-color: rgba(250, 235, 215, 1);
+    margin: auto;
+    width: 40%;
+    height: 50%;
+    border-style: solid;
+    border-color: black;
+    z-index: 1;
+    animation-name: float-in;
+    animation-duration: 2s;
+}
+
+@keyframes float-in {
+    0% { top: 100% }
+    100% { top: 10% }
+}
+

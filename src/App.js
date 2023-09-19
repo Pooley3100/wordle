@@ -2,9 +2,11 @@ import './App.css';
 import BoxGrid from './Boxes/BoxGrid';
 import { useState } from 'react';
 import { select, isWord } from './Control/GetWord';
+import Results from './Results/Results';
 
 function App() {
   const [correctWord, setCorrectWord] = useState(select());
+  const [showPage, setShowPage] = useState(0);
   const [flip, setFlip] = useState(false);
   const [notWord, setNotWord] = useState(false)
   const [currentIn, setCurrentIn] = useState('');
@@ -31,6 +33,12 @@ function App() {
       setTimeout(() => {
         setCurrentList(newList);
         setCurrentIn('');
+        setFlip(false);
+        if(currentIn === correctWord){
+          setShowPage(1);
+        } else if(currentList.length === 5){
+          setShowPage(2);
+        }
       }, 2500);
       setFlip(true);
     } else if (currentIn.length === 5 && !wordResult) {
@@ -41,7 +49,6 @@ function App() {
   //Appends typed in letters to current in
   function changeCurrentIn(letter, mod) {
     setNotWord(false);
-    setFlip(false);
     if (currentIn.length < 5 && mod === true) {
       setCurrentIn(currentIn + letter);
     } else if (mod === false && currentIn.length > 0) {
@@ -56,6 +63,7 @@ function App() {
       <BoxGrid currentInput={currentIn} currentList={currentList} correctWord={correctWord} shake={notWord} flip={flip}>
         <p className={`alert-box ${notWord ? 'alert-box-transition' : ''}`}>Not in Dictionary</p>
       </BoxGrid>
+      <Results showPage={showPage}/>
     </div>
   );
 }
