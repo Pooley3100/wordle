@@ -4,6 +4,12 @@
 
 .navBox {
   text-align: center;
+  font-size: 28px;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(101, 103, 113, 0.9);
+  padding-bottom: 13px;
+  font-family: 'Prompt', sans-serif;
+  color: rgb(4, 86, 73);
 }
 
 .alert-box-transition{

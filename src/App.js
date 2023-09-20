@@ -3,6 +3,7 @@ import BoxGrid from './Boxes/BoxGrid';
 import { useState, useEffect, useRef } from 'react';
 import { select, isWord } from './Control/GetWord';
 import Results from './Results/Results';
+import Keyboard from './Keyboard/Keyboard';
 
 function App() {
   var correctWord = useRef(select());
@@ -94,6 +95,7 @@ function App() {
         <p className={`alert-box ${notWord ? 'alert-box-transition' : ''}`}>Not in Dictionary</p>
       </BoxGrid>
       <Results showPage={showPage} correctWord={correctWord.current}/>
+      <Keyboard currentList={currentList} correctWord={correctWord.current}></Keyboard>
     </div>
   );
 }

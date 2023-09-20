@@ -27,8 +27,7 @@ function BoxGrid(props) {
         }
     }
 
-    //TODO This is very much not the way to do this, a 5x6 array preset would be far better
-    //TODO #2 bug on key id for render
+    //TODO This is very much not the way to do this, a 5x6 array of preset empty would be far better <<<<!!!
     //Contains three tenary controls, first is list of entered words, second is current input, third is empty lines
     return (<div className='box_form'>
         {props.children}
