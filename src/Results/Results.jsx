@@ -10,6 +10,8 @@ function Results(props) {
             <div className='results-page'>
                 <h2>Results</h2>
                 {(props.showPage === 1) ? <p>Congrats you got it</p> : <p>Sorry not today</p>}
+                {(props.showPage === 2) && <p>The word was {props.correctWord} </p>}
+                <p>See you tommorrow!</p>
             </div>)
     } else{
         return('');
