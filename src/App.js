@@ -44,13 +44,29 @@ function App() {
   }, [currentList, showPage]);
 
   //Function called when letter pressed on div spanning div
-  function handleLetterInput(event) {
+  function handleLetterInputKeyboard(event){
     if ((event.key.length === 1 && (event.key.toUpperCase() !== event.key.toLowerCase()))) {
-      changeCurrentIn(event.key.toUpperCase(), true);
+      handleLetterInput(event.key.toUpperCase());
     }
     else if (event.key === "Backspace") {
-      changeCurrentIn('', false);
+      handleLetterInput('Backspace');
     } else if (event.key === "Enter") {
+      handleLetterInput("Enter");
+    }
+  }
+
+  function handleLetterInputVirtual(letter){
+    handleLetterInput(String(letter.target.value));
+  }
+
+  //Called from either keyboard or virtual keyboard input
+  function handleLetterInput(letter) {
+    if ((letter.length === 1 )) {
+      changeCurrentIn(letter, true);
+    }
+    else if (letter === "Backspace") {
+      changeCurrentIn('', false);
+    } else if (letter === "Enter") {
       submitWord();
     }
   }
@@ -89,13 +105,13 @@ function App() {
 
   // Main Wordle with page div for key input, containing header and 5x6 box grid.
   return (
-    <div className='page' onKeyDown={handleLetterInput} tabIndex={'0'}>
+    <div className='page' onKeyDown={handleLetterInputKeyboard} tabIndex={'0'}>
       <h2 className='navBox'> Wordle Rip-Off</h2>
       <BoxGrid currentInput={currentIn} currentList={currentList} correctWord={correctWord.current} shake={notWord} flip={flip}>
         <p className={`alert-box ${notWord ? 'alert-box-transition' : ''}`}>Not in Dictionary</p>
       </BoxGrid>
       <Results showPage={showPage} correctWord={correctWord.current}/>
-      <Keyboard currentList={currentList} correctWord={correctWord.current}></Keyboard>
+      <Keyboard currentList={currentList} correctWord={correctWord.current} handleInput={handleLetterInputVirtual}></Keyboard>
     </div>
   );
 }

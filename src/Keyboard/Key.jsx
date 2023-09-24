@@ -31,8 +31,9 @@ function Key(props) {
     } else{
         setColor('white');
     }
-    return (
-        <button className='key' value={props.key_letter} style={{ backgroundColor: color }}>{props.key_letter}</button>
+
+    return (    
+        <button className='key' onClick={props.handleInput} value={props.key_letter} style={{ backgroundColor: color }}>{props.key_letter}</button>
     );
 }
 
