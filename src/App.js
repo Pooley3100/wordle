@@ -4,6 +4,9 @@ import { useState, useEffect, useRef } from 'react';
 import { select, isWord } from './Control/GetWord';
 import Results from './Results/Results';
 import Keyboard from './Keyboard/Keyboard';
+import {sendCurrent} from './Server/comms';
+import Account from './Account/Account';
+import Clear from './Boxes/Clear'
 
 function App() {
   var correctWord = useRef(select());
@@ -26,6 +29,23 @@ function App() {
       }
     };
   }, [])
+
+  //Function called if api returns account user to fill in word list
+  function loginCurrentList(items){
+    let results = items.then((data) => {
+      console.log(data)
+      setCurrentList(data);
+    }); 
+  }
+
+  function clearList(){
+    setCurrentList([]);
+  }
+
+  //Send current list to server API
+  useEffect(() => {
+    sendCurrent(currentList);
+  }, [currentList])
 
   //Data to save words to local storage
   useEffect(() => {
@@ -106,6 +126,8 @@ function App() {
   // Main Wordle with page div for key input, containing header and 5x6 box grid.
   return (
     <div className='page' onKeyDown={handleLetterInputKeyboard} tabIndex={'0'}>
+      <Account setList={loginCurrentList}></Account>
+      <Clear clearList={clearList}/>
       <h2 className='navBox'> Wordle Rip-Off</h2>
       <BoxGrid currentInput={currentIn} currentList={currentList} correctWord={correctWord.current} shake={notWord} flip={flip}>
         <p className={`alert-box ${notWord ? 'alert-box-transition' : ''}`}>Not in Dictionary</p>

@@ -1,0 +1,9 @@
+.login_container{
+    position: absolute;
+    right: 0;
+    padding: 1rem;
+}
+
+.login_button{
+    padding: 15px;
+}

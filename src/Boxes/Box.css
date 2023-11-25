@@ -26,3 +26,13 @@
     width: 60px;
     padding: 3px;
 }
+
+.box_container{
+    position: absolute;
+    left: 0;
+    padding: 1rem;
+}
+
+.box_button{
+    padding: 15px;
+}
