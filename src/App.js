@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { select, isWord } from './Control/GetWord';
 import Results from './Results/Results';
 import Keyboard from './Keyboard/Keyboard';
-import {sendCurrent} from './Server/comms';
+import { sendCurrent } from './Server/comms';
 import Account from './Account/Account';
 import Clear from './Boxes/Clear'
 
@@ -15,6 +15,7 @@ function App() {
   const [notWord, setNotWord] = useState(false)
   const [currentIn, setCurrentIn] = useState('');
   const [currentList, setCurrentList] = useState([]);
+  const [disableKeyboard, setDisableKeyboard] = useState(false);
 
   //Load currentlist from file, has to check that it was saved on the same day
   useEffect(() => {
@@ -22,8 +23,8 @@ function App() {
     var set_date = new Date(JSON.parse(localStorage.getItem('date')));
     var items = JSON.parse(localStorage.getItem('wordItems'));
     var page = Number(JSON.parse(localStorage.getItem('showPage')));
-    if (items){
-      if(set_date.toDateString() === current_date.toDateString()){
+    if (items) {
+      if (set_date.toDateString() === current_date.toDateString()) {
         setCurrentList(items);
         setShowPage(page);
       }
@@ -31,15 +32,19 @@ function App() {
   }, [])
 
   //Function called if api returns account user to fill in word list
-  function loginCurrentList(items){
+  function loginCurrentList(items) {
     let results = items.then((data) => {
       console.log(data)
       setCurrentList(data);
-    }); 
+    });
   }
 
-  function clearList(){
+  function clearList() {
     setCurrentList([]);
+  }
+
+  function disKeyboard() {
+    setDisableKeyboard(!disableKeyboard);
   }
 
   //Send current list to server API
@@ -55,33 +60,35 @@ function App() {
       localStorage.setItem('wordItems', JSON.stringify(currentList));
       localStorage.setItem('showPage', JSON.stringify(showPage));
     }
-  
+
     window.addEventListener('beforeunload', cleanup);
-  
+
     return () => {
       window.removeEventListener('beforeunload', cleanup);
     }
   }, [currentList, showPage]);
 
   //Function called when letter pressed on div spanning div
-  function handleLetterInputKeyboard(event){
-    if ((event.key.length === 1 && (event.key.toUpperCase() !== event.key.toLowerCase()))) {
-      handleLetterInput(event.key.toUpperCase());
-    }
-    else if (event.key === "Backspace") {
-      handleLetterInput('Backspace');
-    } else if (event.key === "Enter") {
-      handleLetterInput("Enter");
+  function handleLetterInputKeyboard(event) {
+    if (!disableKeyboard) {
+      if ((event.key.length === 1 && (event.key.toUpperCase() !== event.key.toLowerCase()))) {
+        handleLetterInput(event.key.toUpperCase());
+      }
+      else if (event.key === "Backspace") {
+        handleLetterInput('Backspace');
+      } else if (event.key === "Enter") {
+        handleLetterInput("Enter");
+      }
     }
   }
 
-  function handleLetterInputVirtual(letter){
+  function handleLetterInputVirtual(letter) {
     handleLetterInput(String(letter.target.value));
   }
 
   //Called from either keyboard or virtual keyboard input
   function handleLetterInput(letter) {
-    if ((letter.length === 1 )) {
+    if ((letter.length === 1)) {
       changeCurrentIn(letter, true);
     }
     else if (letter === "Backspace") {
@@ -101,9 +108,9 @@ function App() {
         setCurrentList(newList);
         setCurrentIn('');
         setFlip(false);
-        if(currentIn === correctWord.current){
+        if (currentIn === correctWord.current) {
           setShowPage(1);
-        } else if(currentList.length === 5){
+        } else if (currentList.length === 5) {
           setShowPage(2);
         }
       }, 2500);
@@ -126,13 +133,13 @@ function App() {
   // Main Wordle with page div for key input, containing header and 5x6 box grid.
   return (
     <div className='page' onKeyDown={handleLetterInputKeyboard} tabIndex={'0'}>
-      <Account setList={loginCurrentList}></Account>
-      <Clear clearList={clearList}/>
+      <Account setList={loginCurrentList} setKeyboard={disKeyboard}></Account>
+      <Clear clearList={clearList} />
       <h2 className='navBox'> Wordle Rip-Off</h2>
       <BoxGrid currentInput={currentIn} currentList={currentList} correctWord={correctWord.current} shake={notWord} flip={flip}>
         <p className={`alert-box ${notWord ? 'alert-box-transition' : ''}`}>Not in Dictionary</p>
       </BoxGrid>
-      <Results showPage={showPage} correctWord={correctWord.current}/>
+      <Results showPage={showPage} correctWord={correctWord.current} />
       <Keyboard currentList={currentList} correctWord={correctWord.current} handleInput={handleLetterInputVirtual}></Keyboard>
     </div>
   );

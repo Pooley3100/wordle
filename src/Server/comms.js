@@ -21,7 +21,7 @@ function commServer(sendList) {
 }
 
 // Need encrypted username send
-async function login(name = 'test'){
+async function login(userSettings){
     let response = '';
     try{
         response = await fetch(server + 'login', {
@@ -30,7 +30,7 @@ async function login(name = 'test'){
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({username: 'test'})
+            body: JSON.stringify(userSettings)
         })
     } catch(error){
         console.error('Error in logging in');
